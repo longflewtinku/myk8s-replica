@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: ReplicaSet  
+kind: Deployment  
 metadata:
   name: rp-pods
   labels:
@@ -12,13 +12,30 @@ spec:
    minReadySeconds: 6
    replicas: 4
    selector: 
-     matchLabels:
-        app: yellowapp-pods
+      matchExpressions: 
+        - key: web
+          operator: In 
+          values: 
+            - yellowapp-pods
+        - key: env
+          operator: NotIn
+          values:
+            - dev  
+        - key: fortend
+          operator: Exists 
+   strategy:   
+     type: RollingUpdate
+     rollingUpdate: 
+       maxSurge: 1
+       maxUnavailable: 1    
+              
    template: 
      metadata:
         name: podlevellabels
         labels:
-          app: yellowapp-pods
+          web: yellowapp-pods
+          env: prod
+          fortend: web 
      spec:
        containers:
          - name: yellowimage
@@ -37,12 +54,11 @@ spec:
            readinessProbe:
               exec: 
                 command:
-                  - echo hi 
-                  - touch laxmikanthfile         
+                  - echo hi        
            resources:
              requests:
                cpu: 100M
-               memory: 150Mi
+               memory: 200Mi
              limits:
-               cpu: 200M
-               memory: 250Mi   
+               cpu: 300M
+               memory: 300Mi   
