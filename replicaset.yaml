@@ -39,26 +39,39 @@ spec:
      spec:
        containers:
          - name: yellowimage
-           image: 808932887013.dkr.ecr.ap-south-1.amazonaws.com/dev/appimageyellow:latest
+           image: longflew/mycssimages:glass
            ports: 
              - name: yellowapp-ports
                containerPort: 80
                protocol: TCP
+               resources:
+                  # requests:
+                  #   cpu: 100m
+                  #   memory: 64Mi
+                  limits:
+                    cpu: 500m
+                    memory: 256Mi
            startupProbe:
-             httpGet: 
-               path: "/nikitha"
-               port: 80
-           livenessProbe:
+              initialDelaySeconds: 1
+              periodSeconds: 2
+              successThreshold: 1
+              failureThreshold: 2
               tcpSocket:
                 port: 80
+           livenessProbe:
+              initialDelaySeconds: 2
+              periodSeconds: 5
+              successThreshold: 1
+              failureThreshold: 2
+              httpGet:
+                path: /
+                port: 80
            readinessProbe:
-              exec: 
-                command:
-                  - echo hi        
-           resources:
-             requests:
-               cpu: 100M
-               memory: 200Mi
-             limits:
-               cpu: 300M
-               memory: 300Mi   
+              initialDelaySeconds: 2
+              periodSeconds: 5
+              successThreshold: 1
+              failureThreshold: 2
+              timeoutSeconds: 5
+              httpGet:
+                path: /
+                port: 80
