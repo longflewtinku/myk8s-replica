@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mycss-glass
+  namespace: devnamespace
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-css-glass
+  template:
+    metadata:
+      labels:
+        app: my-css-glass
+    spec:
+      containers:
+        - name: css-con
+          image: longflew/mycssimages:glass
+          ports:
+            - containerPort: 80

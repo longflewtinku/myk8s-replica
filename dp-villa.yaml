@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mycss-villa
+  namespace: devnamespace
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-css-villa
+  template:
+    metadata:
+      labels:
+        app: my-css-villa
+    spec:
+      containers:
+        - name: css-con
+          image: longflew/mycssimages:villa
+          ports:
+            - containerPort: 80
