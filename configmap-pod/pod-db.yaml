@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata: 
+   name: mytest-pod
+spec: 
+   containers:
+      - name: mydb-container
+        image: mysql:9.4
+        ports:
+          - containerPort: 3306
+        envFrom: 
+          - configMapRef:
+              name: config-pod-db
+          - secretRef:
+               name: db-secret-pod 
+        volumeMounts:
+          - name: mydb-values
+            mountPath: /var/lib/mysql
+   volumes: 
+    - configMap:
+        name:  config-pod-db 
+        
+        
+    - secret:
+        name:  mydb-values 
+        secretName:  db-secret-pod                
