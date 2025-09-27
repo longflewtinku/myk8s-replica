@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata: 
   name: pvc-ebs-po
-spec: 
+spec:
   storageClassName: ebs-sc
   resources: 
      requests:
