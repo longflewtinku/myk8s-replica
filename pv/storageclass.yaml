@@ -7,7 +7,7 @@ parameters:
    type: "gp2"
 reclaimPolicy: Retain
 volumeBindingMode: WaitForFirstConsumer 
-Allowed topologies: 
-  - matchLabelExpressions: 
-       - key: topology.kubernetes.io/region
-         values: ap-south-1
+# Allowed topologies: 
+#   - matchLabelExpressions: 
+#        - key: topology.kubernetes.io/region
+#          values: ap-south-1
